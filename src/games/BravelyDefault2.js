@@ -81,7 +81,7 @@ const getRandomIntBetweenRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-const PU_BD2 = ({setJobSetOfFour, setRules}) => {
+const PU_BD2 = ({setTypeOfRun, setJobSetOfFour, setRules}) => {
   let rules = "4 jobs are drawn, and the jobs in each slot are based on story progression.";
   return (
     <button onClick={() => {
@@ -90,13 +90,14 @@ const PU_BD2 = ({setJobSetOfFour, setRules}) => {
       let job2 = BravelyDefault2Set[getRandomIntBetweenRange(jobGroup * 1, (jobGroup * 2))];
       let job3 = BravelyDefault2Set[getRandomIntBetweenRange(jobGroup * 2, (jobGroup * 3))];
       let job4 = BravelyDefault2Set[getRandomIntBetweenRange(jobGroup * 3, (jobGroup * 4))];
+      setTypeOfRun("Progressive Unique - 4 Jobs")
       setJobSetOfFour([job1.name, job2.name, job3.name, job4.name])
       setRules(rules)
     }}>Progressive Unique - 4 Jobs</button>
   )
 }
 
-const U_BD2 = ({setJobSetOfFour, setRules}) => {
+const U_BD2 = ({setTypeOfRun, setJobSetOfFour, setRules}) => {
   let rules = "4 jobs are drawn, non-repeating."
   return (
     <button onClick={() => {
@@ -106,13 +107,14 @@ const U_BD2 = ({setJobSetOfFour, setRules}) => {
         if (jobIndices.indexOf(r) === -1) jobIndices.push(r);
       }
       let [job1, job2, job3, job4] = [BravelyDefault2Set[jobIndices[0]], BravelyDefault2Set[jobIndices[1]], BravelyDefault2Set[jobIndices[2]], BravelyDefault2Set[jobIndices[3]]];
+      setTypeOfRun("Unique - 4 Jobs")
       setJobSetOfFour([job1.name, job2.name, job3.name, job4.name])
       setRules(rules)
     }}>Unique - 4 Jobs</button>
   )
 }
 
-const ANY_BD2 = ({setJobSetOfFour, setRules}) => {
+const ANY_BD2 = ({setTypeOfRun, setJobSetOfFour, setRules}) => {
   return (
     <button onClick={() => {
       let jobIndices = [];
@@ -121,6 +123,7 @@ const ANY_BD2 = ({setJobSetOfFour, setRules}) => {
         jobIndices.push(r);
       }
       let [job1, job2, job3, job4] = [BravelyDefault2Set[jobIndices[0]], BravelyDefault2Set[jobIndices[1]], BravelyDefault2Set[jobIndices[2]], BravelyDefault2Set[jobIndices[3]]];
+      setTypeOfRun("Any - 4 Jobs")
       setJobSetOfFour([job1.name, job2.name, job3.name, job4.name])
       setRules("4 jobs are drawn, possibly repeating.")
     }}>Any - 4 Jobs</button>
@@ -129,15 +132,17 @@ const ANY_BD2 = ({setJobSetOfFour, setRules}) => {
 
 
 const BravelyDefault2Body = () => {
+  const [typeOfRun, setTypeOfRun] = React.useState("");
   const [jobSetOfFour, setJobSetOfFour] = React.useState(["","","",""])
   const [rules, setRules] = React.useState("");
 
   return (
     <>
       <h2>Bravely Default 2</h2>
-      <PU_BD2 setJobSetOfFour={setJobSetOfFour} setRules={setRules} />
-      <U_BD2 setJobSetOfFour={setJobSetOfFour} setRules={setRules} />
-      <ANY_BD2 setJobSetOfFour={setJobSetOfFour} setRules={setRules} />
+      <PU_BD2 setTypeOfRun={setTypeOfRun} setJobSetOfFour={setJobSetOfFour} setRules={setRules} />
+      <U_BD2 setTypeOfRun={setTypeOfRun} setJobSetOfFour={setJobSetOfFour} setRules={setRules} />
+      <ANY_BD2 setTypeOfRun={setTypeOfRun} setJobSetOfFour={setJobSetOfFour} setRules={setRules} />
+      {typeOfRun !== "" ? <><h4>Type of Run</h4><p>{typeOfRun}</p></> : <p></p>}
       {jobSetOfFour[0] !== "" ? <><h4>Jobs</h4><p>{jobSetOfFour[0]}, {jobSetOfFour[1]}, {jobSetOfFour[2]}, {jobSetOfFour[3]}</p></> : <p></p>}
       {rules !== "" ? <><hr /><h4>Rules</h4><p>{rules}</p></> : <p></p>}
     </>

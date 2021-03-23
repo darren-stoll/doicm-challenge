@@ -5,3 +5,22 @@
 .body h5 {
   font-style: italic;
 }
+
+.body h5 a {
+  color: black;
+}
+
+.footer {
+  position:fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 8pt;
+  padding-bottom: 20px;
+}
+
+.footer a {
+  text-decoration: none;
+  color: black;
+}
